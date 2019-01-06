@@ -1,0 +1,8 @@
+{
+	"module" : "m2oan",
+	"about" : "OpenTTD Admin Port library",
+	"author" : "Hezkore",
+	"version" : "1.0.0",
+	"support" : "http://hezkore.com",
+	"depends" : [ "libc" ]
+}
