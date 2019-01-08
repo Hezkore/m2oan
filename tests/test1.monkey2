@@ -26,6 +26,8 @@ Function Main()
 	While openttd.Connected
 		
 		openttd.Update()
+		
+		Sleep( 0.25 )
 	Wend
 End
 

@@ -33,6 +33,8 @@ Function Main()
 		
 		openttd.Update()
 		Kicker.Update()
+		
+		Sleep( 0.25 )
 	Wend
 End
 
@@ -151,6 +153,9 @@ Function GotServerWelcome( o:OpenTTDAdmin, j:JsonObject )
 	
 	Print "~nPacket: ServerWelcome"
 	PrintJson( j )
+	
+	' Request clients already connected
+	o.SendAdminPoll( UpdateTypes.CLIENT_INFO )
 	
 	' Request client event updates
 	o.SendAdminUpdateFrequency( UpdateTypes.CLIENT_INFO ,UpdateFrequencies.AUTOMATIC )

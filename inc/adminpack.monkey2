@@ -3,10 +3,29 @@ Class OpenTTDAdmin Extension
 	Method SendAdminUpdateFrequency:Void( type:UpdateTypes, freq:UpdateFrequencies )
 		
 		' Invalid types
-		If type = UpdateTypes.DATE Then Return
-		If type = UpdateTypes.CND_NAMES Then Return
-		If type = UpdateTypes.COMPANY_STATS Then Return
-		If type = UpdateTypes.COMPANY_ECONOMY Then Return
+		If type = UpdateTypes.DATE Then
+			
+			DebugAssert( True, "DATE is not valid" )
+			Return
+		Endif
+		
+		If type = UpdateTypes.CND_NAMES Then
+			
+			DebugAssert( True, "CND_NAMES is not valid" )
+			Return
+		Endif
+		
+		If type = UpdateTypes.COMPANY_STATS Then
+			
+			DebugAssert( True, "COMPANY_STATS is not valid" )
+			Return
+		Endif
+		
+		If type = UpdateTypes.COMPANY_ECONOMY Then
+			
+			DebugAssert( True, "COMPANY_ECONOMY is not valid" )
+			Return
+		Endif
 		
 		Local p := New Packet( AdminPackets.ADMIN_UPDATE_FREQUENCY )
 		
@@ -25,12 +44,26 @@ Class OpenTTDAdmin Extension
 		SendAdminUpdateFrequency( UpdateTypes.CMD_LOGGING, freq )
 	End
 	
-	Method SendAdminPoll:Void( type:UpdateTypes, data:UInt = 0 )
+	Method SendAdminPoll:Void( type:UpdateTypes, data:Int = -1 )
 		
 		' Invalid types
-		If type = UpdateTypes.CONSOLE Then Return
-		If type = UpdateTypes.CHAT Then Return
-		If type = UpdateTypes.CMD_LOGGING Then Return
+		If type = UpdateTypes.CONSOLE Then
+			
+			DebugAssert( True, "CONSOLE is not valid" )
+			Return
+		Endif
+		
+		If type = UpdateTypes.CHAT Then
+			
+			DebugAssert( True, "CHAT is not valid" )
+			Return
+		Endif
+		
+		If type = UpdateTypes.CMD_LOGGING Then
+			
+			DebugAssert( True, "CMD_LOGGING is not valid" )
+			Return
+		Endif
 		
 		Local p := New Packet( AdminPackets.ADMIN_POLL )
 		
@@ -44,18 +77,18 @@ Class OpenTTDAdmin Extension
 		
 		Local p := New Packet( AdminPackets.ADMIN_CHAT )
 		
-        p.WriteUInt8( action )
-        p.WriteUInt8( type )
-        p.WriteUInt32( dest )
+		p.WriteUInt8( action )
+		p.WriteUInt8( type )
+		p.WriteUInt32( dest )
 		
-        message = message.Trim()
-        If message.Length >= 900 Then
-	        
-            message = message.Left( 900 )
-        Endif
+		message = message.Trim()
+		If message.Length >= 900 Then
+			
+			message = message.Left( 900 )
+		Endif
 		
-        p.WriteString( message )
-        p.WriteUInt64( data )
+		p.WriteString( message )
+		p.WriteUInt64( data )
 		
 		Send( p )
 	End
