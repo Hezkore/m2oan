@@ -1,5 +1,15 @@
 Class OpenTTDAdmin Extension
 	
+	' Adjust company ID to match game
+	Method AdjustCompanyID( j:JsonObject )
+		
+		If j["company"] And j["company"].ToNumber() < 255 Then
+			
+			j.SetNumber( "company", j["company"].ToNumber() + 1 )
+		Endif
+	End
+	
+	' Decode incoming server packets
 	Method Decode:Void( p:Packet )
 		
 		'Print "Got packet ID#" + p.ID + " size " + p.Size
@@ -77,7 +87,9 @@ Class OpenTTDAdmin Extension
 				j.SetString( "name", p.ReadString() )
 				j.SetNumber( "language", p.ReadUInt8() )
 				j.SetNumber( "joindate", p.ReadUInt32() )
-				j.SetNumber( "data", p.ReadUInt8() )
+				j.SetNumber( "company", p.ReadUInt8() )
+				
+				AdjustCompanyID( j )
 				
 				OnServerClientInfo( Self, j )
 				
@@ -85,6 +97,8 @@ Class OpenTTDAdmin Extension
 				j.SetNumber( "client", p.ReadUInt32() )
 				j.SetString( "name", p.ReadString() )
 				j.SetNumber( "company", p.ReadUInt8() )
+				
+				AdjustCompanyID( j )
 				
 				OnServerClientUpdate( Self, j )
 				
@@ -102,6 +116,8 @@ Class OpenTTDAdmin Extension
 			Case AdminPackets.SERVER_COMPANY_NEW
 				j.SetNumber( "company", p.ReadUInt8() )
 				
+				AdjustCompanyID( j )
+				
 				OnServerCompanyNew( Self, j )
 				
 			Case AdminPackets.SERVER_COMPANY_INFO
@@ -113,6 +129,8 @@ Class OpenTTDAdmin Extension
 				j.SetNumber( "inaugurated", p.ReadUInt32() )
 				j.SetBool( "ai", p.ReadUInt8() )
 				
+				AdjustCompanyID( j )
+				
 				OnServerCompanyInfo( Self, j )
 				
 			Case AdminPackets.SERVER_COMPANY_UPDATE
@@ -122,6 +140,8 @@ Class OpenTTDAdmin Extension
 				j.SetNumber( "color", p.ReadUInt8() )
 				j.SetBool( "password", p.ReadUInt8() )
 				j.SetNumber( "bankruptcy", p.ReadUInt8() )
+				
+				AdjustCompanyID( j )
 				
 				Local shareCount:UInt
 				While Not p.Eof
@@ -136,6 +156,8 @@ Class OpenTTDAdmin Extension
 			Case AdminPackets.SERVER_COMPANY_REMOVE
 				j.SetNumber( "company", p.ReadUInt8() )
 				j.SetNumber( "reason", p.ReadUInt8() )
+				
+				AdjustCompanyID( j )
 				
 				OnServerCompanyRemove( Self, j )
 				
@@ -153,11 +175,14 @@ Class OpenTTDAdmin Extension
 				j.SetNumber( "value_prev", p.ReadUInt64() )
 				j.SetNumber( "performance_prev", p.ReadUInt16() )
 				
+				AdjustCompanyID( j )
+				
 				OnServerCompanyEconomy( Self, j )
 				
 			Case AdminPackets.SERVER_COMPANY_STATS
 				j.SetNumber( "company", p.ReadUInt8() )
 				
+				AdjustCompanyID( j )
 				
 				Local statsCount:UInt
 				While Not p.Eof
@@ -211,6 +236,8 @@ Class OpenTTDAdmin Extension
 				j.SetNumber( "title", p.ReadUInt32() )
 				j.SetString( "text", p.ReadString() )
 				j.SetNumber( "frame", p.ReadUInt32() )
+				
+				AdjustCompanyID( j )
 				
 				OnServerCmdLogging( Self, j )
 				

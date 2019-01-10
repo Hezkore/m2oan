@@ -73,7 +73,7 @@ Class OpenTTDAdmin Extension
 		Send( p )
 	End
 	
-	Method SendAdminChat:Void( action:Actions, type:DestTypes, dest:UInt, message:String, data:UInt )
+	Method SendAdminChat:Void( action:Actions, type:DestTypes, dest:UInt, message:String, data:UInt = 0 )
 		
 		Local p := New Packet( AdminPackets.ADMIN_CHAT )
 		

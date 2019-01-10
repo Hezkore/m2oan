@@ -5,7 +5,7 @@ Class OpenTTDAdmin
 	Field _host:String
 	Field _port:Int
 	Field _password:String
-	Field _name:String
+	Field _identName:String
 	Field _version:String = "0.1"
 	Field _packetHandler := New PacketHandler
 	
@@ -70,12 +70,12 @@ Class OpenTTDAdmin
 		_password = password
 	End
 	
-	Property Name:String()
+	Property IdentName:String()
 		
-		Return _name
+		Return _identName
 	Setter( name:String )
 		
-		_name = name
+		_identName = name
 	End
 	
 	Property Version:String()
@@ -97,38 +97,34 @@ Class OpenTTDAdmin
 	End
 	
 	Method New()
-		
-		OnPacket = Decode
 	End
 	
 	Method New( host:String, port:Int, password:String )
 		
-		Self.New()
-		
 		_host = host
 		_port = port
 		_password = password
-		
-		Connect()
 	End
 	
 	Method Connect()
+		
+		OnPacket += Decode
 		
 		_socket = Socket.Connect( _host, _port, SocketType.Stream )
 		If Not _socket Print "Client: Couldn't connect to server" ; Return
 		
 		'Print _socket.Address + " connected to server " + _socket.PeerAddress
 		
-		If Not _name Then
+		If Not IdentName Then
 			
-			_name = GetEnv( "username", _socket.Address )
+			_identName = GetEnv( "username", _socket.Address )
 		Endif
 		
 		_socket.SetOption( "TCP_NODELAY", 1 )
 		
 		_stream = New SocketStream( _socket )
 		
-		SendAdminJoin( Password, Name, Version )
+		SendAdminJoin( Password, IdentName, Version )
 	End
 	
 	Method Disconnect()
@@ -141,7 +137,7 @@ Class OpenTTDAdmin
 			_stream.Discard()
 			_stream = Null
 			
-			If _socket Then _stream.Close()
+			If _socket Then _socket.Close()
 			_socket.Discard()
 			_socket = Null
 		End
@@ -174,7 +170,12 @@ Class OpenTTDAdmin
 		Next
 	End
 	
-	Method Update()
+	Method Update() Virtual
+		
+		ReceiveData()
+	End
+	
+	Method ReceiveData()
 		
 		If Not Connected Then Return
 		

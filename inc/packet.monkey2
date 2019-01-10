@@ -205,7 +205,7 @@ Class Packet
 		Return ReadUInt()
 	End
 	
-	Method ReadUInt64:UInt()
+	Method ReadUInt64:ULong()
 		
 		Return ReadULong()
 	End
@@ -244,6 +244,12 @@ Class Packet
 		
 		_offset += sizeof( Int( 0 ) )
 		Return _data.PeekInt( _offset - sizeof( Int( 0 ) ) )
+	End
+	
+	Method ReadLong:Long()
+		
+		_offset += sizeof( Long( 0 ) )
+		Return _data.PeekLong( _offset - sizeof( Long( 0 ) ) )
 	End
 	
 	Method ReadULong:ULong()

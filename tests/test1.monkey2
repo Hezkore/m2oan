@@ -8,7 +8,7 @@ Using m2oan..
 
 Function Main()
 	
-	' Our OpentTDD connection
+	' Our OpentTTD connection
 	Local openttd := New OpenTTDAdmin
 	
 	' Setup connection

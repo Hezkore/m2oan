@@ -11,16 +11,11 @@ Global Kicker:KickHandler
 
 Function Main()
 	
-	' Our OpentTDD connection
-	Local openttd := New OpenTTDAdmin
+	' Our OpentTTD connection
+	Local openttd := New OpenTTDAdmin( "YourServerIP", 3977, "YourPassword" )
 	
-	' Setup our kicked
+	' Setup our kick handler
 	Kicker = New KickHandler( openttd )
-	
-	' Setup connection
-	openttd.Host = "YourServerIP"
-	openttd.Port = 3977
-	openttd.Password = "YourPassword"
 	
 	' Setup events
 	SetupEvents( openttd )
@@ -82,7 +77,7 @@ Class KickHandler
 		
 		Queue.Add( newKick )
 		 	
-		Admin.SendAdminChat( Actions.SERVER_MESSAGE, DestTypes.CLIENT, clientId, "\" + reason + "/ ***", 0 )
+		Admin.SendAdminChat( Actions.CHAT_CLIENT, DestTypes.CLIENT, clientId, reason )
 		
 		Print "Client#" + clientId + " will be kicked in " + KickWait + " seconds (" + reason + ")"
 	End
@@ -158,7 +153,7 @@ Function GotServerWelcome( o:OpenTTDAdmin, j:JsonObject )
 	o.SendAdminPoll( UpdateTypes.CLIENT_INFO )
 	
 	' Request client event updates
-	o.SendAdminUpdateFrequency( UpdateTypes.CLIENT_INFO ,UpdateFrequencies.AUTOMATIC )
+	o.SendAdminUpdateFrequency( UpdateTypes.CLIENT_INFO, UpdateFrequencies.AUTOMATIC )
 End
 
 Function GotServerClientInfo( o:OpenTTDAdmin, j:JsonObject )
