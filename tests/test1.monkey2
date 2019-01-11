@@ -9,11 +9,11 @@ Using m2oan..
 Function Main()
 	
 	' Our OpentTTD connection
-	Local openttd := New OpenTTDAdmin
+	Local openttd:OpenTTDAdmin = New OpenTTDAdmin
 	
 	' Setup connection
 	openttd.Host = "YourServerIP"
-	openttd.Port = 3977
+	'openttd.Port = 3977
 	openttd.Password = "YourPassword"
 	
 	' Setup events

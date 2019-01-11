@@ -45,7 +45,7 @@ Class GameHandler Extends OpenTTDAdmin
 	
 	Method Say( msg:String, action:Actions = Actions.SERVER_MESSAGE, dest:DestTypes = DestTypes.BROADCAST )
 		
-		Game.SendAdminChat( action, dest, 0, msg )
+		SendAdminChat( action, dest, 0, msg )
 	End
 	
 	Method NewGame()
@@ -184,12 +184,12 @@ Class GameHandler Extends OpenTTDAdmin
 		
 		Method Say( msg:String, action:Actions = Actions.CHAT_CLIENT, dest:DestTypes = DestTypes.CLIENT )
 			
-			Game.SendAdminChat( action, dest, ID, msg )
+			_game.SendAdminChat( action, dest, ID, msg )
 		End
 		
 		Method Remove()
 			
-			Game.SendAdminRcon( "kick " + ID )
+			_game.SendAdminRcon( "kick " + ID )
 		End
 	End
 	
@@ -361,7 +361,7 @@ Class GameHandler Extends OpenTTDAdmin
 		
 		Method Say( msg:String, action:Actions = Actions.CHAT_COMPANY, dest:DestTypes = DestTypes.TEAM )
 			
-			Game.SendAdminChat( action, dest, ID, msg )
+			_game.SendAdminChat( action, dest, ID, msg )
 		End
 		
 		Method Remove()

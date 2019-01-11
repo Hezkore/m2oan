@@ -22,7 +22,7 @@ Function Main()
 	'Game = New GameHandler( "YourServerIP", 3977, "YourPassword" )
 	
 	Game.Host = "YourServerIP"
-	Game.Port = 3977
+	'Game.Port = 3977
 	Game.Password = "YourPassword"
 	
 	Game.Connect()
@@ -41,7 +41,7 @@ Function Main()
 	'Game.Pause = True
 	'Game.Name = "Server name"
 	'Game.Say( "Hey all!" )
-	Print "Connected to server" + Game.Name
+	Print "Connected to server: " + Game.Name
 	
 	Local timeout:Int
 	
@@ -70,7 +70,7 @@ Function PrintGameInfo()
 		'Local client:GameHandler.Client = Game.GetClient( 0 )
 		'Local client := Game.GetClient( "Name" )
 		
-		Print Game.Clients.Count() + " client(s)"
+		Print "Client count: " + Game.Clients.Count()
 		For Local client := Eachin Game.Clients
 			
 			Print "#"+ client.ID + " " +
@@ -91,16 +91,17 @@ Function PrintGameInfo()
 		'Local company:GameHandler.Company = Game.GetCompany( 0 )
 		'Local company := Game.GetCompany( "Name" )
 		
-		Print Game.Companies.Count() + " companie(s)"
+		Print "Company count: " + Game.Companies.Count()
 		For Local company := Eachin Game.Companies
 			
 			Print "#" + company.ID + " " +
 			company.Name +
-			" value:" + company.Value +
-			" perf:" + company.Performance +
+			" inaugurated:" + company.Inaugurated +
 			" money:" + company.Money +
 			" loan:" + company.Loan +
-			" president:" + company.President
+			" value:" + company.Value
+			'" perf:" + company.Performance +
+			'" president:" + company.President
 			
 			' company.Remove()
 			' company.Say( "Hey team #" + company.ID )

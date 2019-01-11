@@ -3,7 +3,7 @@ Class OpenTTDAdmin
 	Field _socket:Socket
 	Field _stream:SocketStream
 	Field _host:String
-	Field _port:Int
+	Field _port:Int = 3977
 	Field _password:String
 	Field _identName:String
 	Field _version:String = "0.1"
